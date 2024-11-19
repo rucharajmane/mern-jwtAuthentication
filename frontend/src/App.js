@@ -42,7 +42,6 @@ function App() {
         </nav>
 
         <div className="content-container">
-          {/* Application Routes */}
           <Routes>
             <Route path="/" element={<h1>Welcome to Login/Register</h1>} />
             <Route
