@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-const Login = () => {
+import "./Login.css";
+const Login = ({ setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,11 +12,12 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "http://localhost:4000/api/auth/login",
         formData
       );
+      localStorage.setItem("token", response.data.token);
+      setIsLoggedIn(true);
       alert("You're logged in successfully");
-      console.log(response.data);
     } catch (err) {
       const errorMessage = err.response?.data?.message || "An error occurred";
       alert("Error: " + errorMessage);
@@ -24,12 +25,13 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       <input
         type="email"
         placeholder="Enter your email"
         value={formData.email}
         onChange={(ev) => setFormData({ ...formData, email: ev.target.value })}
+        className="form-input"
       />
       <input
         type="password"
@@ -38,8 +40,11 @@ const Login = () => {
         onChange={(ev) =>
           setFormData({ ...formData, password: ev.target.value })
         }
+        className="form-input"
       />
-      <button type="submit">LogIn</button>
+      <button type="submit" className="form-submit-btn">
+        LogIn
+      </button>
     </form>
   );
 };
