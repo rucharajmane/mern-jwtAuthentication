@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 const Register = ({ setIsLoggedIn }) => {
@@ -9,6 +10,8 @@ const Register = ({ setIsLoggedIn }) => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
@@ -30,6 +33,7 @@ const Register = ({ setIsLoggedIn }) => {
       localStorage.setItem("token", response.data.token);
       setIsLoggedIn(true);
       alert("Registration is SUCCESSFUL");
+      navigate("/");
     } catch (err) {
       const errorMessage = err.response?.data?.message || "An error occurred";
       alert("Error: " + errorMessage);
